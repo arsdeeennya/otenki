@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 
 export const InputWeather = (props) => {
-
   const handleChange = (e) => {
     props.setArea(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const api_key = process.env.REACT_APP_WEATHER_API_KEY;
     axios
       .get(
@@ -22,17 +20,23 @@ export const InputWeather = (props) => {
       });
   };
 
+  useEffect(() => {
+    handleSubmit();
+  }, []);
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <input
-          type="text"
-          value={props.area}
-          onChange={handleChange}
-          placeholder="都道府県名"
-        />
-      </label>
-      <input type="submit" value="送信" />
-    </form>
+    <>
+      <form>
+        <label>
+          <input
+            type="text"
+            value={props.area}
+            onChange={handleChange}
+            placeholder="都道府県名"
+          />
+        </label>
+      </form>
+      <button onClick={handleSubmit}>送信</button>
+    </>
   );
 };
