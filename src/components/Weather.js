@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { InputWeather } from "./InputWeather";
 import { ResultWeather } from "./ResultWeather";
+import { useSelector } from "react-redux";
+import { selectWeather } from "../features/weatherSlice";
 
 export const Weather = () => {
-  const [area, setArea] = useState("東京都");
-  const [weather, setWeather] = useState("");
+  const weather = useSelector(selectWeather);
   return (
     <div>
-      <InputWeather
-        area={area}
-        setArea={setArea}
-        setWeather={setWeather}
-      />
-      <ResultWeather weather={weather} />
+      <InputWeather area={weather.area} />
+      <ResultWeather weather={weather.weather} />
     </div>
   );
 };
