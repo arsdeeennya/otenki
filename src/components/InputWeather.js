@@ -1,9 +1,17 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { weatherInput, weatherSubmit } from "../features/weatherSlice";
 
 export const InputWeather = (props) => {
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
-    props.setArea(e.target.value);
+    dispatch(
+      weatherInput({
+        area: e.target.value,
+      })
+    );
   };
 
   const handleSubmit = () => {
@@ -13,7 +21,11 @@ export const InputWeather = (props) => {
         `https://api.openweathermap.org/data/2.5/weather?q=${props.area}&appid=${api_key}`
       )
       .then((res) => {
-        props.setWeather(res.data.weather[0].main);
+        dispatch(
+          weatherSubmit({
+            weather: res.data.weather[0].main,
+          })
+        );
       })
       .catch((res) => {
         console.log(res);
