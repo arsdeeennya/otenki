@@ -15,6 +15,7 @@ export const weatherSlice = createSlice({
   },
 });
 
+export const getWeather = (payload) => ({ type: "GET_WEATHER", payload });
 export const { weatherInput, weatherSubmit } = weatherSlice.actions;
 export const selectWeather = (state) => state.weather.weather;
 export default weatherSlice.reducer;
