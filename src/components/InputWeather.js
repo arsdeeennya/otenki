@@ -1,39 +1,40 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { weatherInput, getWeather } from "../features/weatherSlice";
+import { getWeather } from "../features/weatherSlice";
+import { Form, Field } from "react-final-form";
 
-export const InputWeather = (props) => {
+export const InputWeather = () => {
   useEffect(() => {
     handleSubmit();
   }, []);
 
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
-    dispatch(
-      weatherInput({
-        area: e.target.value,
-      })
-    );
+  let formData = { area: "東京都" };
+
+  const handleSubmit = (values = formData) => {
+    dispatch(getWeather(values));
   };
 
-  const handleSubmit = () => {
-    dispatch(getWeather({ area: props.area }));
-  };
+  let formData = { area: props.area };
 
   return (
-    <>
-      <form>
-        <label>
-          <input
-            type="text"
-            value={props.area}
-            onChange={handleChange}
-            placeholder="都道府県名"
-          />
-        </label>
-      </form>
-      <button onClick={handleSubmit}>送信</button>
-    </>
+    <Form
+      onSubmit={handleSubmit}
+      initialValues={formData}
+      render={({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <Field name="area">
+            {({ input, meta }) => (
+              <div>
+                <input type="text" {...input} placeholder="都道府県名" />
+                {meta.touched && meta.error && <span>{meta.error}</span>}
+              </div>
+            )}
+          </Field>
+          <button type="submit">送信</button>
+        </form>
+      )}
+    />
   );
 };

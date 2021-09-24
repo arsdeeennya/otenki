@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
+import { selectWeather } from "../features/weatherSlice";
 
-export const ResultWeather = (props) => {
-  return (
-    <div>
-      {props.weather}
-    </div>
-  )
-}
+export const ResultWeather = () => {
+  const weather = useSelector(selectWeather);
+  return <div>{weather.weather}</div>;
+};
