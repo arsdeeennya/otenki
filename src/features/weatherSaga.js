@@ -17,7 +17,12 @@ function* callApi(action) {
       },
     });
   } catch (error) {
-    console.log(error);
+    yield put({
+      type: "weather/weatherSubmit",
+      payload: {
+        weather: "地域を正しく入力してください！",
+      },
+    });
   }
 }
 
