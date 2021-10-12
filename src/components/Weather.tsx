@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { InputWeather } from "./InputWeather";
 import { ResultWeather } from "./ResultWeather";
 

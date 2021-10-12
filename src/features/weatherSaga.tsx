@@ -1,15 +1,23 @@
 import axios from "axios";
 import { put, call, takeLatest, all } from "redux-saga/effects";
 
-const applyAxios = (weather) => {
+const applyAxios = (weather: any) => {
   const api_key = process.env.REACT_APP_WEATHER_API_KEY;
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${weather.area}&appid=${api_key}`;
   return axios.get(url);
 };
 
-function* callApi(action) {
+function* callApi(action: { payload: string }) {
   try {
-    const res = yield call(applyAxios, action.payload);
+    type CallType = {
+      config?: any;
+      data?: any;
+      headers?: any;
+      request?: any;
+      status?: number;
+      statusText?: string;
+    };
+    const res: CallType = yield call(applyAxios, action.payload);
     yield put({
       type: "weather/weatherSubmit",
       payload: {
